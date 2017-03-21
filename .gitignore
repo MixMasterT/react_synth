@@ -1,4 +1,4 @@
 node_modules
-#bundle.js
-#bundle.js.map
-#yarn.lock
+bundle.js
+bundle.js.map
+yarn.lock

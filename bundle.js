@@ -9466,6 +9466,10 @@ var _reactDom = __webpack_require__(79);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _note = __webpack_require__(179);
+
+var _note2 = _interopRequireDefault(_note);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -21734,6 +21738,67 @@ try {
 
 module.exports = g;
 
+
+/***/ }),
+/* 179 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+var createOscillator = function createOscillator(freq) {
+  var osc = ctx.createOscillator();
+  osc.type = "sine";
+  osc.frequency.value = freq;
+  osc.detune.value = 0;
+  osc.start(ctx.currentTime);
+  return osc;
+};
+
+var createGainNode = function createGainNode() {
+  var gainNode = ctx.createGain();
+  gainNode.gain.value = 0;
+  gainNode.connect(ctx.destination);
+  return gainNode;
+};
+
+var Note = function () {
+  function Note(freq) {
+    _classCallCheck(this, Note);
+
+    this.oscillatorNode = createOscillator(freq);
+    this.gainNode = createGainNode();
+    this.oscillatorNode.connect(this.gainNode);
+  }
+
+  _createClass(Note, [{
+    key: "start",
+    value: function start() {
+      this.gainNode.gain.value = 0.3;
+    }
+  }, {
+    key: "stop",
+    value: function stop() {
+      this.gainNode.gain.value = 0;
+    }
+  }]);
+
+  return Note;
+}();
+
+;
+
+exports.default = Note;
 
 /***/ })
 /******/ ]);
