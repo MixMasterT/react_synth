@@ -7,8 +7,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const configureStore = (preloadedState = { notes: [] }) => (
   createStore(
     rootReducer,
-    preloadedState,
-    composeEnhancers(applyMiddleware(thunk))
+    preloadedState
   )
 );
 

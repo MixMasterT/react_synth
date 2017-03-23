@@ -1,33 +1,30 @@
-import { KEY_PRESSED, KEY_RELEASED } from '../actions/note_actions';
-import { merge } from 'lodash'
+import union from 'lodash/union';
+
 import { NOTE_NAMES } from '../util/tones';
+import { KEY_PRESSED, KEY_RELEASED } from '../actions/note_actions';
 
-const _defaultState = {
-  notes: []
-}
 
-const notesReducer = (state = _defaultState, action) => {
+const notesReducer = (state = [], action) => {
   Object.freeze(state);
-  const newNotes = state.notes;
-
-  if (NOTE_NAMES.indexOf(action.key) === -1) {
-    return state;
-  }
+  const validNote = NOTE_NAMES.includes(action.note);
+  const idx = state.indexOf(action.note);
 
   switch(action.type) {
 
     case KEY_PRESSED:
-      if (newNotes.indexOf(action.key) === -1) {
-        newNotes.push(action.key);
+      if (validNote && idx === -1) {
+        return [ ...state, action.note];
       }
-      return merge(state, { notes: newNotes });
+      return state;
 
     case KEY_RELEASED:
-      const noteIdx = newNotes.indexOf(action.key);
-      if (noteIdx > -1) {
-        newNotes.splice(noteIdx, 1);
+      if (idx > -1) {
+        return [
+          ...state.slice(0, idx),
+          ...state.slice(idx + 1)
+        ];
       }
-      return merge(state, { notes: newNotes });
+      return state;
 
     default:
       return state;

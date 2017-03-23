@@ -8,8 +8,8 @@ const mapStateToProps = state => ({
  });
 
 const mapDispatchToProps = dispatch => ({
-  keyPressed: key => dispatch(keyPressed(key)),
-  keyReleased: key => dispatch(keyReleased(key))
+  addNote: key => dispatch(keyPressed(key)),
+  removeNote: key => dispatch(keyReleased(key))
 });
 
 export default connect(

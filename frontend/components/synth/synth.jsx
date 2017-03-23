@@ -1,7 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 
-import { NOTE_NAMES, TONES } from '../../util/tones';
+import { NOTE_NAMES, TONES, KEY_MAP, KEYS } from '../../util/tones';
 import Note from '../../util/note';
 
 class Synth extends React.Component {
@@ -12,7 +12,7 @@ class Synth extends React.Component {
       octave: 1
     }
 
-    this.notes = NOTE_NAMES.map((noteName) => new Note(TONES[noteName]));
+    this.notes = NOTE_NAMES.map(note => new Note(TONES[note]));
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
     this.playNotes = this.playNotes.bind(this);
@@ -21,13 +21,13 @@ class Synth extends React.Component {
   componentDidMount() {
     $(document).on('keydown', e => this.onKeyDown(e));
     $(document).on('keyup', e => this.onKeyUp(e));
+    // console.log(Object.keys(KEYS));
   }
 
   onKeyDown(e) {
-    // this.props.keyPressed(e.which);
     const code = e.which;
     const currentOctave = this.state.octave;
-    console.log("current octave is ", currentOctave);
+
     switch (code) {
       case 90:
         if (currentOctave > 1) {
@@ -39,19 +39,28 @@ class Synth extends React.Component {
           this.setState({ octave: currentOctave + 1 })
         }
         break;
+      default:
+        if (Object.keys(KEYS).indexOf(code.toString()) > -1) {
+          this.props.addNote(KEY_MAP(code, this.state.octave));
+        }
     }
+
+    console.log(this.props.notes);
   }
 
   onKeyUp(e) {
-    console.log(e.which);
-    console.log(this.state.octave);
-    // this.props.keyReleased(e.which);
+    console.log(this.props.notes);
+    this.props.removeNote(KEY_MAP(e.which, this.state.octave));
   }
 
   playNotes() {
-    this.props.notes.forEach((note) => {
-      note.start();
-    })
+    NOTE_NAMES.forEach((note, idx) => {
+      if (this.props.notes.indexOf(note) !== -1) {
+        this.notes[idx].start();
+      } else {
+        this.notes[idx].stop();
+      }
+    });
   }
 
   render() {
