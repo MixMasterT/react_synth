@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Synth from './synth/synth';
+import Synth from './synth/synth_container';
 
 const App = () => {
   return (

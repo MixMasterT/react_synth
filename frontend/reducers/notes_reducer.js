@@ -20,14 +20,14 @@ const notesReducer = (state = _defaultState, action) => {
       if (newNotes.indexOf(action.key) === -1) {
         newNotes.push(action.key);
       }
-      return merge(state, newNotes);
+      return merge(state, { notes: newNotes });
 
     case KEY_RELEASED:
       const noteIdx = newNotes.indexOf(action.key);
       if (noteIdx > -1) {
         newNotes.splice(noteIdx, 1);
       }
-      return merge(state, newNotes);
+      return merge(state, { notes: newNotes });
 
     default:
       return state;
