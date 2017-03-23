@@ -8,7 +8,11 @@ class Synth extends React.Component {
   constructor(props) {
     super(props);
 
-    this.notes = NOTE_NAMES.map((nN) => new Note(TONES[nN]));
+    this.state = {
+      octave: 1
+    }
+
+    this.notes = NOTE_NAMES.map((noteName) => new Note(TONES[noteName]));
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
     this.playNotes = this.playNotes.bind(this);
@@ -20,14 +24,28 @@ class Synth extends React.Component {
   }
 
   onKeyDown(e) {
-    console.log(e.which);
-    this.props.keyPressed(e.which);
+    // this.props.keyPressed(e.which);
+    const code = e.which;
+    const currentOctave = this.state.octave;
+    console.log("current octave is ", currentOctave);
+    switch (code) {
+      case 90:
+        if (currentOctave > 1) {
+          this.setState({ octave: currentOctave - 1 })
+        }
+        break;
+      case 88:
+        if (currentOctave < 4) {
+          this.setState({ octave: currentOctave + 1 })
+        }
+        break;
+    }
   }
 
   onKeyUp(e) {
     console.log(e.which);
-    const key = e.target.value
-    this.props.keyReleased(e.which);
+    console.log(this.state.octave);
+    // this.props.keyReleased(e.which);
   }
 
   playNotes() {
