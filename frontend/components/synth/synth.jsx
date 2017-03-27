@@ -74,6 +74,7 @@ class Synth extends React.Component {
         }
       }
     }
+    if (this.props.isRecording) { this.props.addNotes(this.props.notes); }
     console.log(this.props.notes);
   }
 

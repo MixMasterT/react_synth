@@ -21,19 +21,19 @@ const tracksReducer = (state = {}, action) => {
       return merge({[currentTrackId]: newTrack}, state);
 
     case STOP_RECORDING:
-      let currentTrack = state[currentTrackId];
-      currentTrack.roll += {
+      let endingTrack = state[currentTrackId];
+      endingTrack.roll.push({
         notes: [],
-        timeSlice: action.timeNow - currentTrack.timeStart
-      };
-      return merge({ [currentTrackId]: currentTrack }, state);
+        timeSlice: action.timeNow - endingTrack.timeStart
+      });
+      return merge({ [currentTrackId]: endingTrack }, state);
 
     case ADD_NOTES:
       let currentTrack = state[currentTrackId];
-      currentTrack.roll += {
-        notes: state.notes + action.notes,
+      currentTrack.roll.push({
+        notes: action.notes,
         timeSlice: action.timeNow - currentTrack.timeStart
-      };
+      });
       return merge({ [currentTrackId]: currentTrack }, state);
 
     default:

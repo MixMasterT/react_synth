@@ -13,7 +13,7 @@ export const stopRecording = () => ({
 })
 
 export const addNotes = (notes) => ({
-  type: STOP_RECORDING,
+  type: ADD_NOTES,
   timeNow: Date.now(),
   notes
 })

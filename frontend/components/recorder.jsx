@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 
 import { startRecording, stopRecording } from '../actions/track_actions';
 
-const Recorder = ({startRecording, stopRecording, isRecording, tracks}) => {
+const Recorder = ({startRecording,
+  stopRecording,
+  isRecording,
+  tracks,
+  isPlaying}) => {
   console.log(isRecording);
   return (
     <div className='recorder'>
@@ -11,13 +15,13 @@ const Recorder = ({startRecording, stopRecording, isRecording, tracks}) => {
       <div>
         <button
           onClick={startRecording}
-          disabled={isRecording}
+          disabled={isRecording || isPlaying}
         >
           Start
         </button>
         <button
           onClick={stopRecording}
-          disabled={!isRecording}
+          disabled={!isRecording || isPlaying}
         >
           Stop
         </button>
