@@ -1,5 +1,3 @@
-import union from 'lodash/union';
-
 import { NOTE_NAMES } from '../util/tones';
 import { KEY_PRESSED, KEY_RELEASED } from '../actions/note_actions';
 
