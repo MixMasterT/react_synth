@@ -1,7 +1,13 @@
 import React from 'react';
 import $ from 'jquery';
 
-import { NOTE_NAMES, TONES, KEY_MAP, KEYS } from '../../util/tones';
+import { TONES,
+         getTone,
+         NOTE_NAMES,
+         KEYS,
+         BASS_KEYS,
+         TREBLE_KEYS } from '../../util/tones';
+
 import Note from '../../util/note';
 
 import NoteKey from '../note_key';
@@ -14,7 +20,15 @@ class Synth extends React.Component {
       octave: 1
     }
 
-    this.notes = NOTE_NAMES.map(note => new Note(TONES[note]));
+    this.notes = NOTE_NAMES.map((noteName) => {
+      const nameArr = noteName.split("");
+      const octave = parseInt(nameArr.pop());
+      const pitch = nameArr.join("");
+      return new Note(getTone(pitch, octave))
+    })
+
+    console.log(this.notes);
+
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
     this.playNotes = this.playNotes.bind(this);
@@ -27,32 +41,61 @@ class Synth extends React.Component {
   }
 
   onKeyDown(e) {
+    console.log(e.key);
     const code = e.which;
     const currentOctave = this.state.octave;
 
-    switch (code) {
-      case 90:
+    switch (e.key) {
+      case 'ArrowDown':
         if (currentOctave > 1) {
           this.setState({ octave: currentOctave - 1 })
         }
         break;
-      case 88:
+      case 'ArrowUp':
         if (currentOctave < 4) {
           this.setState({ octave: currentOctave + 1 })
         }
         break;
       default:
-        if (Object.keys(KEYS).indexOf(code.toString()) > -1) {
-          this.props.addNote(KEY_MAP(code, this.state.octave));
-        }
-    }
 
+      if (Object.keys(BASS_KEYS).includes(e.key)) {
+
+        if (Object.keys(BASS_KEYS).indexOf(e.key) === 12) {
+          this.props.addNote(BASS_KEYS[e.key] + (this.state.octave + 1));
+        } else {
+          this.props.addNote(BASS_KEYS[e.key] + this.state.octave);
+        }
+
+      } else if (Object.keys(TREBLE_KEYS).includes(e.key)) {
+
+        if (Object.keys(TREBLE_KEYS).indexOf(e.key) === 12) {
+          this.props.addNote(TREBLE_KEYS[e.key] + (this.state.octave + 2));
+        } else {
+          this.props.addNote(TREBLE_KEYS[e.key] + (this.state.octave + 1));
+        }
+      }
+    }
     console.log(this.props.notes);
   }
 
   onKeyUp(e) {
-    console.log(this.props.notes);
-    this.props.removeNote(KEY_MAP(e.which, this.state.octave));
+    if (Object.keys(BASS_KEYS).includes(e.key)) {
+
+      if (Object.keys(BASS_KEYS).indexOf(e.key) === 12) {
+        this.props.removeNote(BASS_KEYS[e.key] + (this.state.octave + 1));
+      } else {
+        this.props.removeNote(BASS_KEYS[e.key] + this.state.octave);
+      }
+
+    } else if (Object.keys(TREBLE_KEYS).includes(e.key)) {
+
+      if (Object.keys(TREBLE_KEYS).indexOf(e.key) === 12) {
+        this.props.removeNote(TREBLE_KEYS[e.key] + (this.state.octave + 2));
+      } else {
+        this.props.removeNote(TREBLE_KEYS[e.key] + (this.state.octave + 1));
+      }
+
+    }
   }
 
   playNotes() {
@@ -67,11 +110,11 @@ class Synth extends React.Component {
 
   render() {
     this.playNotes();
-    console.log(Object.keys(KEYS));
-    const keys = Object.keys(KEYS).map((keyCode) => (
+    const keys = Object.keys(KEYS).map((keyCode, idx) => (
       <NoteKey
         note={KEYS[keyCode]}
         key={keyCode}
+        pitch={'dog'}
         pressed={this.props.notes.includes(KEYS[keyCode])}
       />
     ))
