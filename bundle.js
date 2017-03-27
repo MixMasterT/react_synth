@@ -10944,43 +10944,7 @@ var App = function App() {
 exports.default = App;
 
 /***/ }),
-/* 112 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(13);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var NoteKey = function NoteKey(_ref) {
-  var note = _ref.note,
-      pressed = _ref.pressed;
-
-  var classes = 'key';
-  if (note.indexOf('b') > -1) {
-    classes += ' black';
-  }
-  if (pressed) {
-    classes += ' pressed';
-  }
-  return _react2.default.createElement(
-    'div',
-    { className: classes },
-    note
-  );
-};
-
-exports.default = NoteKey;
-
-/***/ }),
+/* 112 */,
 /* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11007,7 +10971,7 @@ var _note = __webpack_require__(64);
 
 var _note2 = _interopRequireDefault(_note);
 
-var _note_key = __webpack_require__(112);
+var _note_key = __webpack_require__(303);
 
 var _note_key2 = _interopRequireDefault(_note_key);
 
@@ -11038,8 +11002,6 @@ var Synth = function (_React$Component) {
       return new _note2.default((0, _tones.getTone)(pitch, octave));
     });
 
-    console.log(_this.notes);
-
     _this.onKeyDown = _this.onKeyDown.bind(_this);
     _this.onKeyUp = _this.onKeyUp.bind(_this);
     _this.playNotes = _this.playNotes.bind(_this);
@@ -11062,7 +11024,6 @@ var Synth = function (_React$Component) {
   }, {
     key: 'onKeyDown',
     value: function onKeyDown(e) {
-      console.log(e.key);
       var code = e.which;
       var currentOctave = this.state.octave;
 
@@ -11135,14 +11096,25 @@ var Synth = function (_React$Component) {
       var _this4 = this;
 
       this.playNotes();
-      var keys = Object.keys(_tones.KEYS).map(function (keyCode, idx) {
+
+      var bassKeys = Object.keys(_tones.BASS_KEYS).map(function (key, idx) {
         return _react2.default.createElement(_note_key2.default, {
-          note: _tones.KEYS[keyCode],
-          key: keyCode,
-          pitch: 'dog',
-          pressed: _this4.props.notes.includes(_tones.KEYS[keyCode])
+          pitch: _tones.BASS_KEYS[key],
+          key: key,
+          symbol: key,
+          pressed: key === ',' ? _this4.props.notes.includes('C' + (_this4.state.octave + 1)) : _this4.props.notes.includes(_tones.BASS_KEYS[key] + _this4.state.octave)
         });
       });
+
+      // const trebleKeys = Object.keys(TREBLE_KEYS).map((key, idx) => (
+      //   <NoteKey
+      //     pitch={TREBLE_KEYS[key]}
+      //     key={key}
+      //     symbol={key}
+      //     pressed={this.props.notes.includes(TREBLE_KEYS[key] + (this.state.octave + 1))}
+      //   />
+      // ))
+
       return _react2.default.createElement(
         'div',
         { className: 'synth' },
@@ -11154,7 +11126,7 @@ var Synth = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'keyboard' },
-          keys
+          bassKeys
         )
       );
     }
@@ -36893,6 +36865,53 @@ module.exports = function(module) {
 	return module;
 };
 
+
+/***/ }),
+/* 303 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(13);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var NoteKey = function NoteKey(_ref) {
+  var pitch = _ref.pitch,
+      symbol = _ref.symbol,
+      pressed = _ref.pressed;
+
+  var classes = 'key';
+  if (pitch.indexOf('b') > -1) {
+    classes = 'black';
+  }
+  if (pressed) {
+    classes += ' pressed';
+  }
+  return _react2.default.createElement(
+    'div',
+    { className: classes },
+    _react2.default.createElement(
+      'div',
+      { className: 'pitch' },
+      pitch
+    ),
+    _react2.default.createElement(
+      'div',
+      { className: 'symbol' },
+      symbol
+    )
+  );
+};
+
+exports.default = NoteKey;
 
 /***/ })
 /******/ ]);

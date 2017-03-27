@@ -1,0 +1,36 @@
+.synth {
+  text-align: center;
+}
+
+.keyboard {
+  width: 80%;
+  min-width: 600px;
+  max-width: 800px;
+  height: 20em;
+  margin: 2em auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  /*position: relative;*/
+}
+
+.key, .black {
+  border: 1px solid black;
+  width: 5em;
+  padding-top: 3em;
+  box-shadow: 2px 4px grey;
+  z-index: 1;
+}
+
+.black {
+  background-color: black;
+  color: white;
+  height: 50%;
+  z-index: 20;
+  left: -1.5em;
+}
+.pressed {
+  background-color: #A2AB92;
+  box-shadow: 1px 3px grey;
+  transform: scale(0.99);
+}

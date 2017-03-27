@@ -10,7 +10,7 @@ import { TONES,
 
 import Note from '../../util/note';
 
-import NoteKey from '../note_key';
+import NoteKey from './note_key';
 
 class Synth extends React.Component {
   constructor(props) {
@@ -27,8 +27,6 @@ class Synth extends React.Component {
       return new Note(getTone(pitch, octave))
     })
 
-    console.log(this.notes);
-
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
     this.playNotes = this.playNotes.bind(this);
@@ -41,7 +39,6 @@ class Synth extends React.Component {
   }
 
   onKeyDown(e) {
-    console.log(e.key);
     const code = e.which;
     const currentOctave = this.state.octave;
 
@@ -110,19 +107,32 @@ class Synth extends React.Component {
 
   render() {
     this.playNotes();
-    const keys = Object.keys(KEYS).map((keyCode, idx) => (
+
+    const bassKeys = Object.keys(BASS_KEYS).map((key, idx) => (
       <NoteKey
-        note={KEYS[keyCode]}
-        key={keyCode}
-        pitch={'dog'}
-        pressed={this.props.notes.includes(KEYS[keyCode])}
+        pitch={BASS_KEYS[key]}
+        key={key}
+        symbol={key}
+        pressed={key === ',' ?
+                  this.props.notes.includes('C' + (this.state.octave + 1)) :
+                  this.props.notes.includes(BASS_KEYS[key] + this.state.octave)}
       />
     ))
+
+    // const trebleKeys = Object.keys(TREBLE_KEYS).map((key, idx) => (
+    //   <NoteKey
+    //     pitch={TREBLE_KEYS[key]}
+    //     key={key}
+    //     symbol={key}
+    //     pressed={this.props.notes.includes(TREBLE_KEYS[key] + (this.state.octave + 1))}
+    //   />
+    // ))
+
     return (
       <div className='synth'>
         <h3>This is the Synth!</h3>
         <div className='keyboard'>
-          {keys}
+          {bassKeys}
         </div>
       </div>
     )

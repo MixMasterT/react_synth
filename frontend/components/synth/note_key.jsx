@@ -1,8 +1,8 @@
 import React from 'react';
 
-const NoteKey = ({pitch, key, pressed}) => {
+const NoteKey = ({pitch, symbol, pressed}) => {
   let classes = 'key'
-  if (note.indexOf('b') > -1) {
+  if (pitch.indexOf('b') > -1) {
     classes = 'black'
   }
   if (pressed) {
@@ -13,8 +13,8 @@ const NoteKey = ({pitch, key, pressed}) => {
       <div className='pitch'>
         {pitch}
       </div>
-      <div className='key'>
-        {key}
+      <div className='symbol'>
+        {symbol}
       </div>
     </div>
   );
