@@ -11148,7 +11148,16 @@ var Synth = function (_React$Component) {
           pitch: _tones.BASS_KEYS[key],
           key: key,
           symbol: key,
-          pressed: key === ',' ? _this4.props.notes.includes('C' + (_this4.state.octave + 1)) : _this4.props.notes.includes(_tones.BASS_KEYS[key] + _this4.state.octave)
+          pressed: key === ',' ? idx === 0 ? _this4.props.notes.includes('C' + _this4.state.octave) : _this4.props.notes.includes('C' + (_this4.state.octave + 1)) : _this4.props.notes.includes(_tones.BASS_KEYS[key] + _this4.state.octave)
+        });
+      });
+      // This is necessary because Object.keys gives wrong order for numerical string values
+      var trebbleKeys = ['q', '2', 'w', '3', 'e', 'r', '5', 't', '6', 'y', '7', 'u', 'i'].map(function (key, idx) {
+        return _react2.default.createElement(_note_key2.default, {
+          pitch: _tones.TREBLE_KEYS[key],
+          key: key,
+          symbol: key,
+          pressed: key === 'i' ? idx === 0 ? _this4.props.notes.includes('C' + (_this4.state.octave + 1)) : _this4.props.notes.includes('C' + (_this4.state.octave + 2)) : _this4.props.notes.includes(_tones.TREBLE_KEYS[key] + (_this4.state.octave + 1))
         });
       });
 
@@ -11159,6 +11168,11 @@ var Synth = function (_React$Component) {
           'h3',
           null,
           'This is the Synth!'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'keyboard' },
+          trebbleKeys
         ),
         _react2.default.createElement(
           'div',

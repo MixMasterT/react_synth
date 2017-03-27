@@ -114,14 +114,44 @@ class Synth extends React.Component {
         key={key}
         symbol={key}
         pressed={key === ',' ?
-                  this.props.notes.includes('C' + (this.state.octave + 1)) :
+                  (idx === 0 ? this.props.notes.includes('C' + (this.state.octave)) :
+                  this.props.notes.includes('C' + (this.state.octave + 1))) :
                   this.props.notes.includes(BASS_KEYS[key] + this.state.octave)}
+      />
+    ))
+    // This is necessary because Object.keys gives wrong order for numerical string values
+    const trebbleKeys = [  'q',
+      '2',
+      'w',
+      '3',
+      'e',
+      'r',
+      '5',
+      't',
+      '6',
+      'y',
+      '7',
+      'u',
+      'i'].map((key, idx) => (
+      <NoteKey
+        pitch={TREBLE_KEYS[key]}
+        key={key}
+        symbol={key}
+        pressed={key === 'i' ?
+                  (idx === 0 ? this.props.notes.includes('C' + (this.state.octave + 1)) :
+                  this.props.notes.includes('C' + (this.state.octave + 2))) :
+                  this.props.notes.includes(TREBLE_KEYS[key] + (this.state.octave + 1))}
       />
     ))
 
     return (
       <div className='synth'>
         <h3>This is the Synth!</h3>
+
+        <div className='keyboard'>
+          {trebbleKeys}
+        </div>
+
         <div className='keyboard'>
           {bassKeys}
         </div>
