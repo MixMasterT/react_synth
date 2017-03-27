@@ -1,5 +1,7 @@
 import { NOTE_NAMES } from '../util/tones';
-import { KEY_PRESSED, KEY_RELEASED } from '../actions/note_actions';
+import { KEY_PRESSED,
+         KEY_RELEASED,
+         GROUP_UPDATE } from '../actions/note_actions';
 
 
 const notesReducer = (state = [], action) => {
@@ -23,6 +25,9 @@ const notesReducer = (state = [], action) => {
         ];
       }
       return state;
+
+    case GROUP_UPDATE:
+      return ([...state] + action.notes);
 
     default:
       return state;

@@ -7111,12 +7111,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 var KEY_PRESSED = exports.KEY_PRESSED = 'KEY_PRESSED';
 var KEY_RELEASED = exports.KEY_RELEASED = 'KEY_RELEASED';
+var GROUP_UPDATE = exports.GROUP_UPDATE = 'GROUP_UPDATE';
 
 var keyPressed = exports.keyPressed = function keyPressed(note) {
   return { type: KEY_PRESSED, note: note };
 };
 var keyReleased = exports.keyReleased = function keyReleased(note) {
   return { type: KEY_RELEASED, note: note };
+};
+var groupUpdate = exports.groupUpdate = function groupUpdate(notes) {
+  return {
+    type: GROUP_UPDATE,
+    notes: notes
+  };
 };
 
 /***/ }),
@@ -11258,6 +11265,9 @@ var notesReducer = function notesReducer() {
       }
       return state;
 
+    case _note_actions.GROUP_UPDATE:
+      return [].concat(_toConsumableArray(state)) + action.notes;
+
     default:
       return state;
   }
@@ -11290,12 +11300,17 @@ var _tracks_reducer = __webpack_require__(305);
 
 var _tracks_reducer2 = _interopRequireDefault(_tracks_reducer);
 
+var _is_playing_reducer = __webpack_require__(349);
+
+var _is_playing_reducer2 = _interopRequireDefault(_is_playing_reducer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var rootReducer = (0, _redux.combineReducers)({
   notes: _notes_reducer2.default,
   isRecording: _is_recording_reducer2.default,
-  tracks: _tracks_reducer2.default
+  tracks: _tracks_reducer2.default,
+  isPlaying: _is_playing_reducer2.default
 });
 
 exports.default = rootReducer;
@@ -38014,6 +38029,60 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Recorder);
+
+/***/ }),
+/* 348 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var START_PLAYING = exports.START_PLAYING = 'START_PLAYING';
+var STOP_PLAYING = exports.STOP_PLAYING = 'STOP_PLAYING';
+
+var startPlaying = exports.startPlaying = function startPlaying() {
+  return {
+    type: START_PLAYING
+  };
+};
+
+var stopPlaying = exports.stopPlaying = function stopPlaying() {
+  return {
+    type: STOP_PLAYING
+  };
+};
+
+/***/ }),
+/* 349 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _play_actions = __webpack_require__(348);
+
+var isPlayingReducer = function isPlayingReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _play_actions.START_PLAYING:
+      return true;
+    case _play_actions.STOP_PLAYING:
+      return false;
+    default:
+      return state;
+  }
+};
+
+exports.default = isPlayingReducer;
 
 /***/ })
 /******/ ]);
