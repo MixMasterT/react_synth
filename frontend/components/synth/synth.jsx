@@ -12,6 +12,8 @@ import Note from '../../util/note';
 
 import NoteKey from './note_key';
 
+import Recorder from '../recorder';
+
 class Synth extends React.Component {
   constructor(props) {
     super(props);
@@ -155,6 +157,8 @@ class Synth extends React.Component {
         <div className='keyboard'>
           {bassKeys}
         </div>
+
+        <Recorder />
       </div>
     )
   }

@@ -5,7 +5,7 @@
   width: 80%;
   min-width: 600px;
   max-width: 800px;
-  height: 20em;
+  height: 15em;
   margin: 2em auto;
   display: flex;
   flex-direction: row;
@@ -16,7 +16,7 @@
 }
 
 .key {
-  height:16em; width:4em; z-index:1;
+  height:12em; width:3em; z-index:1;
 	border-left:1px solid #bbb;
 	border-bottom:1px solid #bbb;
 	border-radius:0 0 5px 5px;
@@ -26,7 +26,7 @@
 }
 
 .black {
-  height:8em; width:2em; margin:0 0 0 -1em; z-index:2;
+  height:6em; width:1.5em; margin:0 0 0 -1em; z-index:2;
 	border:1px solid #000;
 	border-radius:0 0 3px 3px;
 	box-shadow:-1px -1px 2px rgba(255,255,255,0.2) inset, 0 -5px 2px 3px rgba(0,0,0,0.6) inset, 0 2px 4px rgba(0,0,0,0.5);
@@ -52,6 +52,6 @@
 }
 
 .symbol {
-  margin-top: 4em;
+  margin-top: 3em;
   color: #888;
 }

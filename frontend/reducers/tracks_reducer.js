@@ -4,37 +4,37 @@ import { START_RECORDING,
          STOP_RECORDING,
          ADD_NOTES } from '../actions/track_actions';
 
-let currTrackId = 0;
+let currentTrackId = 0;
 
 const tracksReducer = (state = {}, action) => {
   Object.freeze(state);
 
   switch(action.type) {
     case START_RECORDING:
-      currTrackId++;
+      currentTrackId++;
       const newTrack = {
-        id: currTrackId,
-        name: `Track #{currTrackId}`,
+        id: currentTrackId,
+        name: `Track ${currentTrackId}`,
         roll: [],
         timeStart: Date.now()
       }
-      return merge(state, {[currTrackId]: newTrack});
+      return merge({[currentTrackId]: newTrack}, state);
 
     case STOP_RECORDING:
-      currentTrack = state[currTrackId];
+      let currentTrack = state[currentTrackId];
       currentTrack.roll += {
         notes: [],
         timeSlice: action.timeNow - currentTrack.timeStart
       };
-      return merge(state, { [currentTrackId]: currentTrack });
+      return merge({ [currentTrackId]: currentTrack }, state);
 
     case ADD_NOTES:
-      currentTrack = state[currTrackId];
+      let currentTrack = state[currentTrackId];
       currentTrack.roll += {
         notes: state.notes + action.notes,
         timeSlice: action.timeNow - currentTrack.timeStart
       };
-      return merge(state, { [currentTrackId]: currentTrack });
+      return merge({ [currentTrackId]: currentTrack }, state);
 
     default:
       return state;
