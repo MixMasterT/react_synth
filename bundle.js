@@ -10944,7 +10944,53 @@ var App = function App() {
 exports.default = App;
 
 /***/ }),
-/* 112 */,
+/* 112 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(13);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var NoteKey = function NoteKey(_ref) {
+  var pitch = _ref.pitch,
+      symbol = _ref.symbol,
+      pressed = _ref.pressed;
+
+  var classes = 'key';
+  if (pitch.indexOf('b') > -1) {
+    classes = 'black';
+  }
+  if (pressed) {
+    classes += ' pressed';
+  }
+  return _react2.default.createElement(
+    'div',
+    { className: classes },
+    _react2.default.createElement(
+      'div',
+      { className: 'pitch' },
+      pitch
+    ),
+    _react2.default.createElement(
+      'div',
+      { className: 'symbol' },
+      symbol
+    )
+  );
+};
+
+exports.default = NoteKey;
+
+/***/ }),
 /* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10971,7 +11017,7 @@ var _note = __webpack_require__(64);
 
 var _note2 = _interopRequireDefault(_note);
 
-var _note_key = __webpack_require__(303);
+var _note_key = __webpack_require__(112);
 
 var _note_key2 = _interopRequireDefault(_note_key);
 
@@ -11105,15 +11151,6 @@ var Synth = function (_React$Component) {
           pressed: key === ',' ? _this4.props.notes.includes('C' + (_this4.state.octave + 1)) : _this4.props.notes.includes(_tones.BASS_KEYS[key] + _this4.state.octave)
         });
       });
-
-      // const trebleKeys = Object.keys(TREBLE_KEYS).map((key, idx) => (
-      //   <NoteKey
-      //     pitch={TREBLE_KEYS[key]}
-      //     key={key}
-      //     symbol={key}
-      //     pressed={this.props.notes.includes(TREBLE_KEYS[key] + (this.state.octave + 1))}
-      //   />
-      // ))
 
       return _react2.default.createElement(
         'div',
@@ -36865,53 +36902,6 @@ module.exports = function(module) {
 	return module;
 };
 
-
-/***/ }),
-/* 303 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(13);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var NoteKey = function NoteKey(_ref) {
-  var pitch = _ref.pitch,
-      symbol = _ref.symbol,
-      pressed = _ref.pressed;
-
-  var classes = 'key';
-  if (pitch.indexOf('b') > -1) {
-    classes = 'black';
-  }
-  if (pressed) {
-    classes += ' pressed';
-  }
-  return _react2.default.createElement(
-    'div',
-    { className: classes },
-    _react2.default.createElement(
-      'div',
-      { className: 'pitch' },
-      pitch
-    ),
-    _react2.default.createElement(
-      'div',
-      { className: 'symbol' },
-      symbol
-    )
-  );
-};
-
-exports.default = NoteKey;
 
 /***/ })
 /******/ ]);

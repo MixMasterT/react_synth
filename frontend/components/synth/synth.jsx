@@ -119,15 +119,6 @@ class Synth extends React.Component {
       />
     ))
 
-    // const trebleKeys = Object.keys(TREBLE_KEYS).map((key, idx) => (
-    //   <NoteKey
-    //     pitch={TREBLE_KEYS[key]}
-    //     key={key}
-    //     symbol={key}
-    //     pressed={this.props.notes.includes(TREBLE_KEYS[key] + (this.state.octave + 1))}
-    //   />
-    // ))
-
     return (
       <div className='synth'>
         <h3>This is the Synth!</h3>
