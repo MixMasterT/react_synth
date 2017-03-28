@@ -95,8 +95,8 @@ class Synth extends React.Component {
       } else {
         this.props.removeNote(TREBLE_KEYS[e.key] + (this.state.octave + 1));
       }
-
     }
+    if (this.props.isRecording) { this.props.addNotes(this.props.notes); }
   }
 
   playNotes() {

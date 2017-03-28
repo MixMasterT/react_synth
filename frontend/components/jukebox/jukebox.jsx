@@ -3,16 +3,22 @@ import { connect } from 'react-redux';
 
 import { startPlaying, stopPlaying } from '../../actions/play_actions';
 import { groupUpdate } from '../../actions/note_actions';
+import { deleteTrack } from '../../actions/track_actions';
 
 import Track from './track';
 
-const Jukebox = ({ tracks, isPlaying, isRecording, onPlay }) => {
+const Jukebox = ({ tracks,
+                   isPlaying,
+                   isRecording,
+                   onPlay,
+                   deleteTrack }) => {
   const tracksList = Object.keys(tracks).map((id) => (
     <Track
       track={tracks[id]}
       disabled={isPlaying || isRecording}
       onPlay={onPlay(tracks[id])}
       key={id}
+      onDelete={() => deleteTrack(id)}
     />
   ))
   return (
@@ -32,6 +38,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  deleteTrack: trackId => dispatch(deleteTrack(trackId)),
   onPlay: track => e => {
     dispatch(startPlaying());
     const roll = track.roll;

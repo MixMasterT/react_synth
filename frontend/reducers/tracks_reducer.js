@@ -2,7 +2,8 @@ import merge from 'lodash/merge';
 
 import { START_RECORDING,
          STOP_RECORDING,
-         ADD_NOTES } from '../actions/track_actions';
+         ADD_NOTES,
+         DELETE_TRACK } from '../actions/track_actions';
 
 let currentTrackId = 0;
 
@@ -35,6 +36,11 @@ const tracksReducer = (state = {}, action) => {
         timeSlice: action.timeNow - currentTrack.timeStart
       });
       return merge({ [currentTrackId]: currentTrack }, state);
+
+    case DELETE_TRACK:
+      let newState = merge({}, state);
+      delete newState[action.trackId];
+      return newState;
 
     default:
       return state;

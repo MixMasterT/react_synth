@@ -11117,6 +11117,9 @@ var Synth = function (_React$Component) {
           this.props.removeNote(_tones.TREBLE_KEYS[e.key] + (this.state.octave + 1));
         }
       }
+      if (this.props.isRecording) {
+        this.props.addNotes(this.props.notes);
+      }
     }
   }, {
     key: 'playNotes',
@@ -36445,6 +36448,7 @@ Object.defineProperty(exports, "__esModule", {
 var START_RECORDING = exports.START_RECORDING = 'START_RECORDING';
 var STOP_RECORDING = exports.STOP_RECORDING = 'STOP_RECORDING';
 var ADD_NOTES = exports.ADD_NOTES = 'ADD_NOTES';
+var DELETE_TRACK = exports.DELETE_TRACK = 'DELETE_TRACK';
 
 var startRecording = exports.startRecording = function startRecording() {
   return {
@@ -36465,6 +36469,13 @@ var addNotes = exports.addNotes = function addNotes(notes) {
     type: ADD_NOTES,
     timeNow: Date.now(),
     notes: notes
+  };
+};
+
+var deleteTrack = exports.deleteTrack = function deleteTrack(trackId) {
+  return {
+    type: DELETE_TRACK,
+    trackId: trackId
   };
 };
 
@@ -36553,6 +36564,11 @@ var tracksReducer = function tracksReducer() {
         timeSlice: action.timeNow - currentTrack.timeStart
       });
       return (0, _merge5.default)(_defineProperty({}, currentTrackId, currentTrack), state);
+
+    case _track_actions.DELETE_TRACK:
+      var newState = (0, _merge5.default)({}, state);
+      delete newState[action.trackId];
+      return newState;
 
     default:
       return state;
@@ -38113,6 +38129,8 @@ var _play_actions = __webpack_require__(348);
 
 var _note_actions = __webpack_require__(65);
 
+var _track_actions = __webpack_require__(303);
+
 var _track = __webpack_require__(353);
 
 var _track2 = _interopRequireDefault(_track);
@@ -38123,14 +38141,18 @@ var Jukebox = function Jukebox(_ref) {
   var tracks = _ref.tracks,
       isPlaying = _ref.isPlaying,
       isRecording = _ref.isRecording,
-      onPlay = _ref.onPlay;
+      onPlay = _ref.onPlay,
+      deleteTrack = _ref.deleteTrack;
 
   var tracksList = Object.keys(tracks).map(function (id) {
     return _react2.default.createElement(_track2.default, {
       track: tracks[id],
       disabled: isPlaying || isRecording,
       onPlay: onPlay(tracks[id]),
-      key: id
+      key: id,
+      onDelete: function onDelete() {
+        return deleteTrack(id);
+      }
     });
   });
   return _react2.default.createElement(
@@ -38155,6 +38177,9 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
+    deleteTrack: function deleteTrack(trackId) {
+      return dispatch((0, _track_actions.deleteTrack)(trackId));
+    },
     onPlay: function onPlay(track) {
       return function (e) {
         dispatch((0, _play_actions.startPlaying)());
