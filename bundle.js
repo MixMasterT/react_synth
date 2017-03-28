@@ -11271,7 +11271,7 @@ var notesReducer = function notesReducer() {
       return state;
 
     case _note_actions.GROUP_UPDATE:
-      return [].concat(_toConsumableArray(state)) + action.notes;
+      return action.notes;
 
     default:
       return state;
