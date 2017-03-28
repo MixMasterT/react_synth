@@ -11005,9 +11005,13 @@ var _note_key = __webpack_require__(112);
 
 var _note_key2 = _interopRequireDefault(_note_key);
 
-var _recorder = __webpack_require__(347);
+var _recorder = __webpack_require__(351);
 
 var _recorder2 = _interopRequireDefault(_recorder);
+
+var _jukebox = __webpack_require__(352);
+
+var _jukebox2 = _interopRequireDefault(_jukebox);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11170,7 +11174,8 @@ var Synth = function (_React$Component) {
           { className: 'keyboard' },
           bassKeys
         ),
-        _react2.default.createElement(_recorder2.default, null)
+        _react2.default.createElement(_recorder2.default, null),
+        _react2.default.createElement(_jukebox2.default, null)
       );
     }
   }]);
@@ -37951,7 +37956,63 @@ module.exports = toPlainObject;
 
 
 /***/ }),
-/* 347 */
+/* 347 */,
+/* 348 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var START_PLAYING = exports.START_PLAYING = 'START_PLAYING';
+var STOP_PLAYING = exports.STOP_PLAYING = 'STOP_PLAYING';
+
+var startPlaying = exports.startPlaying = function startPlaying() {
+  return {
+    type: START_PLAYING
+  };
+};
+
+var stopPlaying = exports.stopPlaying = function stopPlaying() {
+  return {
+    type: STOP_PLAYING
+  };
+};
+
+/***/ }),
+/* 349 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _play_actions = __webpack_require__(348);
+
+var isPlayingReducer = function isPlayingReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _play_actions.START_PLAYING:
+      return true;
+    case _play_actions.STOP_PLAYING:
+      return false;
+    default:
+      return state;
+  }
+};
+
+exports.default = isPlayingReducer;
+
+/***/ }),
+/* 350 */,
+/* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38031,7 +38092,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Recorder);
 
 /***/ }),
-/* 348 */
+/* 352 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38040,49 +38101,68 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var START_PLAYING = exports.START_PLAYING = 'START_PLAYING';
-var STOP_PLAYING = exports.STOP_PLAYING = 'STOP_PLAYING';
 
-var startPlaying = exports.startPlaying = function startPlaying() {
-  return {
-    type: START_PLAYING
-  };
-};
+var _react = __webpack_require__(13);
 
-var stopPlaying = exports.stopPlaying = function stopPlaying() {
-  return {
-    type: STOP_PLAYING
-  };
-};
+var _react2 = _interopRequireDefault(_react);
 
-/***/ }),
-/* 349 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+var _reactRedux = __webpack_require__(99);
 
 var _play_actions = __webpack_require__(348);
 
-var isPlayingReducer = function isPlayingReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-  var action = arguments[1];
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-  switch (action.type) {
-    case _play_actions.START_PLAYING:
-      return true;
-    case _play_actions.STOP_PLAYING:
-      return false;
-    default:
-      return state;
-  }
+var Jukebox = function Jukebox(_ref) {
+  var tracks = _ref.tracks,
+      isPlaying = _ref.isPlaying,
+      isRecording = _ref.isRecording,
+      onPlay = _ref.onPlay;
+  return _react2.default.createElement(
+    'div',
+    { className: 'jukebox' },
+    'This is the Jukebox',
+    _react2.default.createElement('div', { className: 'track-list' })
+  );
 };
 
-exports.default = isPlayingReducer;
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    tracks: state.tracks,
+    isRecording: state.isRecording,
+    isPlaying: state.isPlaying
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    onPlay: function onPlay(track) {
+      return function (e) {
+        dispatch((0, _play_actions.startPlaying)());
+        var roll = track.roll;
+        var playbackStartTime = Date.now();
+
+        var currentNote = 0;
+        var elapsedTime = void 0;
+
+        var interval = setInterval(function () {
+          if (currentNote < roll.length) {
+            elapsedTime = Date.now() - playbackStartTime;
+
+            if (elapsedTime >= roll.timeSlice) {
+              dispatch((0, _play_actions.groupUpdate)(roll[currentNote].notes));
+              currentNote++;
+            }
+          } else {
+            clearInterval(interval);
+            dispatch((0, _play_actions.stopPlaying)());
+          }
+        }, 1);
+      };
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Jukebox);
 
 /***/ })
 /******/ ]);

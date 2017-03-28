@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { startRecording, stopRecording } from '../actions/track_actions';
+import { startRecording, stopRecording } from '../../actions/track_actions';
 
 const Recorder = ({startRecording,
   stopRecording,

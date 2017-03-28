@@ -12,7 +12,8 @@ import Note from '../../util/note';
 
 import NoteKey from './note_key';
 
-import Recorder from '../recorder';
+import Recorder from '../recorder/recorder';
+import Jukebox from '../jukebox/jukebox';
 
 class Synth extends React.Component {
   constructor(props) {
@@ -160,6 +161,7 @@ class Synth extends React.Component {
         </div>
 
         <Recorder />
+        <Jukebox />
       </div>
     )
   }
