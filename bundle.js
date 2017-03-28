@@ -38110,6 +38110,12 @@ var _reactRedux = __webpack_require__(99);
 
 var _play_actions = __webpack_require__(348);
 
+var _note_actions = __webpack_require__(65);
+
+var _track = __webpack_require__(353);
+
+var _track2 = _interopRequireDefault(_track);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Jukebox = function Jukebox(_ref) {
@@ -38117,11 +38123,24 @@ var Jukebox = function Jukebox(_ref) {
       isPlaying = _ref.isPlaying,
       isRecording = _ref.isRecording,
       onPlay = _ref.onPlay;
+
+  var tracksList = Object.keys(tracks).map(function (id) {
+    return _react2.default.createElement(_track2.default, {
+      track: tracks[id],
+      disabled: isPlaying || isRecording,
+      onPlay: onPlay(tracks[id]),
+      key: id
+    });
+  });
   return _react2.default.createElement(
     'div',
     { className: 'jukebox' },
     'This is the Jukebox',
-    _react2.default.createElement('div', { className: 'track-list' })
+    _react2.default.createElement(
+      'div',
+      { className: 'track-list' },
+      tracksList
+    )
   );
 };
 
@@ -38148,8 +38167,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
           if (currentNote < roll.length) {
             elapsedTime = Date.now() - playbackStartTime;
 
-            if (elapsedTime >= roll.timeSlice) {
-              dispatch((0, _play_actions.groupUpdate)(roll[currentNote].notes));
+            if (elapsedTime >= roll[currentNote].timeSlice) {
+              dispatch((0, _note_actions.groupUpdate)(roll[currentNote].notes));
               currentNote++;
             }
           } else {
@@ -38163,6 +38182,59 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Jukebox);
+
+/***/ }),
+/* 353 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(13);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Track = function Track(_ref) {
+  var track = _ref.track,
+      disabled = _ref.disabled,
+      onPlay = _ref.onPlay,
+      onDelete = _ref.onDelete;
+  return _react2.default.createElement(
+    'div',
+    { className: 'track' },
+    track.name,
+    _react2.default.createElement(
+      'div',
+      { className: 'track-buttons' },
+      _react2.default.createElement(
+        'button',
+        {
+          className: 'play-button',
+          disabled: disabled,
+          onClick: onPlay
+        },
+        'Play'
+      ),
+      _react2.default.createElement(
+        'button',
+        {
+          className: 'delete-button',
+          disabled: disabled,
+          onClick: onDelete
+        },
+        'Delete'
+      )
+    )
+  );
+};
+
+exports.default = Track;
 
 /***/ })
 /******/ ]);

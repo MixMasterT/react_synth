@@ -1,18 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { groupUpdate,
-         startPlaying,
-         stopPlaying } from '../../actions/play_actions';
+import { startPlaying, stopPlaying } from '../../actions/play_actions';
+import { groupUpdate } from '../../actions/note_actions';
 
-const Jukebox = ({ tracks, isPlaying, isRecording, onPlay }) => (
-  <div className='jukebox'>
-    This is the Jukebox
-    <div className='track-list'>
-      {}
+import Track from './track';
+
+const Jukebox = ({ tracks, isPlaying, isRecording, onPlay }) => {
+  const tracksList = Object.keys(tracks).map((id) => (
+    <Track
+      track={tracks[id]}
+      disabled={isPlaying || isRecording}
+      onPlay={onPlay(tracks[id])}
+      key={id}
+    />
+  ))
+  return (
+    <div className='jukebox'>
+      This is the Jukebox
+      <div className='track-list'>
+        {tracksList}
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 const mapStateToProps = state => ({
   tracks: state.tracks,
@@ -33,7 +44,7 @@ const mapDispatchToProps = dispatch => ({
       if (currentNote < roll.length) {
         elapsedTime = Date.now() - playbackStartTime;
 
-        if (elapsedTime >= roll.timeSlice) {
+        if (elapsedTime >= roll[currentNote].timeSlice) {
           dispatch(groupUpdate(roll[currentNote].notes));
           currentNote++;
         }
