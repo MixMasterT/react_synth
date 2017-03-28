@@ -32,6 +32,7 @@ const Recorder = ({startRecording,
 
 const mapStateToProps = state => ({
   isRecording: state.isRecording,
+  isPlaying: state.isPlaying,
   tracks: state.tracks
 });
 

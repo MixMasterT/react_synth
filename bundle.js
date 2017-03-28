@@ -38074,6 +38074,7 @@ var Recorder = function Recorder(_ref) {
 var mapStateToProps = function mapStateToProps(state) {
   return {
     isRecording: state.isRecording,
+    isPlaying: state.isPlaying,
     tracks: state.tracks
   };
 };
