@@ -1,6 +1,10 @@
 import React from 'react';
 
-const NoteKey = ({pitch, symbol, pressed}) => {
+const NoteKey = ({pitch,
+                  symbol,
+                  pressed,
+                  handleMouseDown,
+                  handleMouseUp}) => {
   let classes = 'key'
   if (pitch.indexOf('b') > -1) {
     classes = 'black'
@@ -9,7 +13,11 @@ const NoteKey = ({pitch, symbol, pressed}) => {
     classes += ' pressed'
   }
   return (
-    <div className={classes}>
+    <div
+      className={classes}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+    >
       <div className='pitch'>
         {pitch}
       </div>

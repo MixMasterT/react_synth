@@ -33,12 +33,23 @@ class Synth extends React.Component {
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
     this.playNotes = this.playNotes.bind(this);
+    this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleMouseUp = this.handleMouseUp.bind(this);
+    this.addByKeyString = this.addByKeyString.bind(this);
+    this.removeByKeyString = this.removeByKeyString.bind(this);
   }
 
   componentDidMount() {
     $(document).on('keydown', e => this.onKeyDown(e));
     $(document).on('keyup', e => this.onKeyUp(e));
-    // console.log(Object.keys(KEYS));
+  }
+
+  handleMouseDown(keyStr) {
+    return e => this.addByKeyString(keyStr);
+  }
+
+  handleMouseUp(keyStr) {
+    return e => this.removeByKeyString(keyStr);
   }
 
   onKeyDown(e) {
@@ -58,42 +69,87 @@ class Synth extends React.Component {
         break;
       default:
 
-      if (Object.keys(BASS_KEYS).includes(e.key)) {
+      this.addByKeyString(e.key);
 
-        if (Object.keys(BASS_KEYS).indexOf(e.key) === 12) {
-          this.props.addNote(BASS_KEYS[e.key] + (this.state.octave + 1));
-        } else {
-          this.props.addNote(BASS_KEYS[e.key] + this.state.octave);
-        }
+    }
+    //   if (Object.keys(BASS_KEYS).includes(e.key)) {
+    //
+    //     if (Object.keys(BASS_KEYS).indexOf(e.key) === 12) {
+    //       this.props.addNote(BASS_KEYS[e.key] + (this.state.octave + 1));
+    //     } else {
+    //       this.props.addNote(BASS_KEYS[e.key] + this.state.octave);
+    //     }
+    //
+    //   } else if (Object.keys(TREBLE_KEYS).includes(e.key)) {
+    //
+    //     if (Object.keys(TREBLE_KEYS).indexOf(e.key) === 12) {
+    //       this.props.addNote(TREBLE_KEYS[e.key] + (this.state.octave + 2));
+    //     } else {
+    //       this.props.addNote(TREBLE_KEYS[e.key] + (this.state.octave + 1));
+    //     }
+    //   }
+    // }
+    // if (this.props.isRecording) { this.props.addNotes(this.props.notes); }
+    // console.log(this.props.notes);
+  }
 
-      } else if (Object.keys(TREBLE_KEYS).includes(e.key)) {
+  onKeyUp(e) {
+    this.removeByKeyString(e.key);
+    // if (Object.keys(BASS_KEYS).includes(e.key)) {
+    //
+    //   if (Object.keys(BASS_KEYS).indexOf(e.key) === 12) {
+    //     this.props.removeNote(BASS_KEYS[e.key] + (this.state.octave + 1));
+    //   } else {
+    //     this.props.removeNote(BASS_KEYS[e.key] + this.state.octave);
+    //   }
+    //
+    // } else if (Object.keys(TREBLE_KEYS).includes(e.key)) {
+    //
+    //   if (Object.keys(TREBLE_KEYS).indexOf(e.key) === 12) {
+    //     this.props.removeNote(TREBLE_KEYS[e.key] + (this.state.octave + 2));
+    //   } else {
+    //     this.props.removeNote(TREBLE_KEYS[e.key] + (this.state.octave + 1));
+    //   }
+    // }
+    // if (this.props.isRecording) { this.props.addNotes(this.props.notes); }
+  }
 
-        if (Object.keys(TREBLE_KEYS).indexOf(e.key) === 12) {
-          this.props.addNote(TREBLE_KEYS[e.key] + (this.state.octave + 2));
-        } else {
-          this.props.addNote(TREBLE_KEYS[e.key] + (this.state.octave + 1));
-        }
+  addByKeyString(keyStr) {
+    if (Object.keys(BASS_KEYS).includes(keyStr)) {
+
+      if (Object.keys(BASS_KEYS).indexOf(keyStr) === 12) {
+        this.props.addNote(BASS_KEYS[keyStr] + (this.state.octave + 1));
+      } else {
+        this.props.addNote(BASS_KEYS[keyStr] + this.state.octave);
+      }
+
+    } else if (Object.keys(TREBLE_KEYS).includes(keyStr)) {
+
+      if (Object.keys(TREBLE_KEYS).indexOf(keyStr) === 12) {
+        this.props.addNote(TREBLE_KEYS[keyStr] + (this.state.octave + 2));
+      } else {
+        this.props.addNote(TREBLE_KEYS[keyStr] + (this.state.octave + 1));
       }
     }
     if (this.props.isRecording) { this.props.addNotes(this.props.notes); }
     console.log(this.props.notes);
   }
 
-  onKeyUp(e) {
-    if (Object.keys(BASS_KEYS).includes(e.key)) {
+  removeByKeyString(keyStr) {
+    if (Object.keys(BASS_KEYS).includes(keyStr)) {
 
-      if (Object.keys(BASS_KEYS).indexOf(e.key) === 12) {
-        this.props.removeNote(BASS_KEYS[e.key] + (this.state.octave + 1));
+      if (Object.keys(BASS_KEYS).indexOf(keyStr) === 12) {
+        this.props.removeNote(BASS_KEYS[keyStr] + (this.state.octave + 1));
       } else {
-        this.props.removeNote(BASS_KEYS[e.key] + this.state.octave);
+        this.props.removeNote(BASS_KEYS[keyStr] + this.state.octave);
       }
 
-    } else if (Object.keys(TREBLE_KEYS).includes(e.key)) {
+    } else if (Object.keys(TREBLE_KEYS).includes(keyStr)) {
 
-      if (Object.keys(TREBLE_KEYS).indexOf(e.key) === 12) {
-        this.props.removeNote(TREBLE_KEYS[e.key] + (this.state.octave + 2));
+      if (Object.keys(TREBLE_KEYS).indexOf(keyStr) === 12) {
+        this.props.removeNote(TREBLE_KEYS[keyStr] + (this.state.octave + 2));
       } else {
-        this.props.removeNote(TREBLE_KEYS[e.key] + (this.state.octave + 1));
+        this.props.removeNote(TREBLE_KEYS[keyStr] + (this.state.octave + 1));
       }
     }
     if (this.props.isRecording) { this.props.addNotes(this.props.notes); }
@@ -116,6 +172,8 @@ class Synth extends React.Component {
       <NoteKey
         pitch={BASS_KEYS[key]}
         key={key}
+        handleMouseDown={this.handleMouseDown(key)}
+        handleMouseUp={this.handleMouseUp(key)}
         symbol={key}
         pressed={key === ',' ?
                   (idx === 0 ? this.props.notes.includes('C' + (this.state.octave)) :
@@ -141,6 +199,8 @@ class Synth extends React.Component {
         pitch={TREBLE_KEYS[key]}
         key={key}
         symbol={key}
+        handleMouseDown={this.handleMouseDown(key)}
+        handleMouseUp={this.handleMouseUp(key)}
         pressed={key === 'i' ?
                   (idx === 0 ? this.props.notes.includes('C' + (this.state.octave + 1)) :
                   this.props.notes.includes('C' + (this.state.octave + 2))) :
