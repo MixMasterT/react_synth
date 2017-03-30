@@ -70,48 +70,11 @@ class Synth extends React.Component {
       default:
 
       this.addByKeyString(e.key);
-
     }
-    //   if (Object.keys(BASS_KEYS).includes(e.key)) {
-    //
-    //     if (Object.keys(BASS_KEYS).indexOf(e.key) === 12) {
-    //       this.props.addNote(BASS_KEYS[e.key] + (this.state.octave + 1));
-    //     } else {
-    //       this.props.addNote(BASS_KEYS[e.key] + this.state.octave);
-    //     }
-    //
-    //   } else if (Object.keys(TREBLE_KEYS).includes(e.key)) {
-    //
-    //     if (Object.keys(TREBLE_KEYS).indexOf(e.key) === 12) {
-    //       this.props.addNote(TREBLE_KEYS[e.key] + (this.state.octave + 2));
-    //     } else {
-    //       this.props.addNote(TREBLE_KEYS[e.key] + (this.state.octave + 1));
-    //     }
-    //   }
-    // }
-    // if (this.props.isRecording) { this.props.addNotes(this.props.notes); }
-    // console.log(this.props.notes);
   }
 
   onKeyUp(e) {
     this.removeByKeyString(e.key);
-    // if (Object.keys(BASS_KEYS).includes(e.key)) {
-    //
-    //   if (Object.keys(BASS_KEYS).indexOf(e.key) === 12) {
-    //     this.props.removeNote(BASS_KEYS[e.key] + (this.state.octave + 1));
-    //   } else {
-    //     this.props.removeNote(BASS_KEYS[e.key] + this.state.octave);
-    //   }
-    //
-    // } else if (Object.keys(TREBLE_KEYS).includes(e.key)) {
-    //
-    //   if (Object.keys(TREBLE_KEYS).indexOf(e.key) === 12) {
-    //     this.props.removeNote(TREBLE_KEYS[e.key] + (this.state.octave + 2));
-    //   } else {
-    //     this.props.removeNote(TREBLE_KEYS[e.key] + (this.state.octave + 1));
-    //   }
-    // }
-    // if (this.props.isRecording) { this.props.addNotes(this.props.notes); }
   }
 
   addByKeyString(keyStr) {
