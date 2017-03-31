@@ -67,9 +67,9 @@ class Synth extends React.Component {
           this.setState({ octave: currentOctave + 1 })
         }
         break;
-      default:
 
-      this.addByKeyString(e.key);
+      default:
+        this.addByKeyString(e.key);
     }
   }
 
@@ -95,7 +95,6 @@ class Synth extends React.Component {
       }
     }
     if (this.props.isRecording) { this.props.addNotes(this.props.notes); }
-    console.log(this.props.notes);
   }
 
   removeByKeyString(keyStr) {
@@ -173,7 +172,7 @@ class Synth extends React.Component {
 
     return (
       <div className='synth'>
-        <h3>This is the Synth!</h3>
+        <h1>React Synth</h1>
 
         <div className='keyboard'>
           {trebbleKeys}

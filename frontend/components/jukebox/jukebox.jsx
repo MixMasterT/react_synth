@@ -12,7 +12,9 @@ const Jukebox = ({ tracks,
                    isRecording,
                    onPlay,
                    deleteTrack }) => {
-  const tracksList = Object.keys(tracks).map((id) => (
+  const trackIds = Object.keys(tracks);
+
+  const tracksList = trackIds.map((id) => (
     <Track
       track={tracks[id]}
       disabled={isPlaying || isRecording}
@@ -21,9 +23,12 @@ const Jukebox = ({ tracks,
       onDelete={() => deleteTrack(id)}
     />
   ))
+
+  const heading = <h3>Click 'play' to hear your recorded tracks!</h3>
+  
   return (
     <div className='jukebox'>
-      This is the Jukebox
+      {trackIds.length > 0 ? heading : "" }
       <div className='track-list'>
         {tracksList}
       </div>

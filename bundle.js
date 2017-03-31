@@ -11572,7 +11572,9 @@ var Jukebox = function Jukebox(_ref) {
       onPlay = _ref.onPlay,
       deleteTrack = _ref.deleteTrack;
 
-  var tracksList = Object.keys(tracks).map(function (id) {
+  var trackIds = Object.keys(tracks);
+
+  var tracksList = trackIds.map(function (id) {
     return _react2.default.createElement(_track2.default, {
       track: tracks[id],
       disabled: isPlaying || isRecording,
@@ -11583,10 +11585,17 @@ var Jukebox = function Jukebox(_ref) {
       }
     });
   });
+
+  var heading = _react2.default.createElement(
+    'h3',
+    null,
+    'Click \'play\' to hear your recorded tracks!'
+  );
+
   return _react2.default.createElement(
     'div',
     { className: 'jukebox' },
-    'This is the Jukebox',
+    trackIds.length > 0 ? heading : "",
     _react2.default.createElement(
       'div',
       { className: 'track-list' },
@@ -11718,18 +11727,17 @@ var Recorder = function Recorder(_ref) {
       tracks = _ref.tracks,
       isPlaying = _ref.isPlaying;
 
-  console.log(isRecording);
   return _react2.default.createElement(
     'div',
     { className: 'recorder' },
     _react2.default.createElement(
       'h3',
       null,
-      'This is the recorder!'
+      'Press \'start\' to record!'
     ),
     _react2.default.createElement(
       'div',
-      null,
+      { className: 'recorder-buttons' },
       _react2.default.createElement(
         'button',
         {
@@ -11947,8 +11955,8 @@ var Synth = function (_React$Component) {
             this.setState({ octave: currentOctave + 1 });
           }
           break;
-        default:
 
+        default:
           this.addByKeyString(e.key);
       }
     }
@@ -11978,7 +11986,6 @@ var Synth = function (_React$Component) {
       if (this.props.isRecording) {
         this.props.addNotes(this.props.notes);
       }
-      console.log(this.props.notes);
     }
   }, {
     key: 'removeByKeyString',
@@ -12048,9 +12055,9 @@ var Synth = function (_React$Component) {
         'div',
         { className: 'synth' },
         _react2.default.createElement(
-          'h3',
+          'h1',
           null,
-          'This is the Synth!'
+          'React Synth'
         ),
         _react2.default.createElement(
           'div',

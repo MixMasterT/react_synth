@@ -1,5 +1,10 @@
 body {
   text-align: center;
+  background: linear-gradient(90deg,#00537E 10%,#3AA17E 90%);
+}
+
+.synth {
+  color: rgba(235,245,225,1);
 }
 
 .keyboard {
@@ -20,13 +25,17 @@ body {
 }
 
 .key {
+  background-color: #FEF;
   height:12em; width:3em; z-index:1;
 	border-left:1px solid #bbb;
 	border-bottom:1px solid #bbb;
 	border-radius:0 0 5px 5px;
 	box-shadow:-1px 0 0 rgba(255,255,255,0.8) inset, 0 0 5px #ccc inset, 0 0 3px rgba(0,0,0,0.2);
-	background: linear-gradient(top, #eee 0%,#fff 100%);
   position: relative;
+}
+
+.key .pitch {
+  color: #888;
 }
 
 .black {
@@ -58,4 +67,17 @@ body {
 .symbol {
   margin-top: 3em;
   color: #888;
+}
+.recorder, .track {
+  background: linear-gradient(180deg,#CA7100 10%,#7E4600 90%);
+  width: 20em;
+  padding: 1em;
+  margin: 2em auto;
+  border-radius: 0.5em;
+}
+
+.track-buttons, .recorder-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }

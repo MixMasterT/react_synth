@@ -4,15 +4,14 @@ import { connect } from 'react-redux';
 import { startRecording, stopRecording } from '../../actions/track_actions';
 
 const Recorder = ({startRecording,
-  stopRecording,
-  isRecording,
-  tracks,
-  isPlaying}) => {
-  console.log(isRecording);
+                   stopRecording,
+                   isRecording,
+                   tracks,
+                   isPlaying}) => {
   return (
     <div className='recorder'>
-      <h3>This is the recorder!</h3>
-      <div>
+      <h3>Press 'start' to record!</h3>
+      <div className='recorder-buttons'>
         <button
           onClick={startRecording}
           disabled={isRecording || isPlaying}
