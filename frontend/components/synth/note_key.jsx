@@ -7,7 +7,7 @@ const NoteKey = ({pitch,
                   handleMouseUp}) => {
   let classes = 'key'
   if (pitch.indexOf('b') > -1) {
-    classes = 'black'
+    classes = `black ${pitch}`;
   }
   if (pressed) {
     classes += ' pressed'
